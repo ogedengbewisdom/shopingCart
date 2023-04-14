@@ -5,7 +5,7 @@ import Products from './components/Shop/Products';
 import {useDispatch, useSelector} from "react-redux"
 import { Fragment } from 'react';
 import Notification from './components/UI/Notification';
-import { uiActions } from './store/uiSlice';
+import { sendCartData } from "./store/cartSlice"
 
 let isInital = true
 
@@ -49,48 +49,55 @@ function App() {
   //   })
   // }, [cart, dispatch])
 
-  useEffect(() => {
-    const sendCartDatass = async () => {
-      if (isInital) {
-        isInital = false
-        return;
-      }
+  // useEffect(() => {
+  //   const sendCartDatass = async () => {
+  //     if (isInital) {
+  //       isInital = false
+  //       return;
+  //     }
   
-      dispatch(uiActions.showNotification({
-        status: "pending",
-        title: "Sending",
-        message: "Sending cart data"
-      }))
-      const sendCartData = async () => {
-        const response = await fetch(`https://advanceredux-8aa58-default-rtdb.firebaseio.com/cart.json`, {
-          method: "PUT",
-          body: JSON.stringify(cart)
-        })
-        if ( !response.ok ) {
-          throw new Error ("Error 404")
-        }
-      }
-      try {
-        await sendCartData();
-        dispatch(uiActions.showNotification({
-          status: "success",
-          title: "Success",
-          message: "Sent cart data"
-        }))
+  //     dispatch(uiActions.showNotification({
+  //       status: "pending",
+  //       title: "Sending",
+  //       message: "Sending cart data"
+  //     }))
+  //     const sendCartData = async () => {
+  //       const response = await fetch(`https://advanceredux-8aa58-default-rtdb.firebaseio.com/cart.json`, {
+  //         method: "PUT",
+  //         body: JSON.stringify(cart)
+  //       })
+  //       if ( !response.ok ) {
+  //         throw new Error ("Error 404")
+  //       }
+  //     }
+  //     try {
+  //       await sendCartData();
+  //       dispatch(uiActions.showNotification({
+  //         status: "success",
+  //         title: "Success",
+  //         message: "Sent cart data"
+  //       }))
 
-      } 
-      catch (error) {
-        dispatch(uiActions.showNotification({
-          status: "error",
-          title: "Error 404",
-          message: error.message
-        }))
-      }
-    }
-    sendCartDatass()
+  //     } 
+  //     catch (error) {
+  //       dispatch(uiActions.showNotification({
+  //         status: "error",
+  //         title: "Error 404",
+  //         message: error.message
+  //       }))
+  //     }
+  //   }
+  //   sendCartDatass()
     
-  }, [cart, dispatch])
+  // }, [cart, dispatch])
 
+  useEffect( () => {
+    if ( isInital ) {
+      isInital = false;
+      return;
+    }
+    dispatch(sendCartData(cart))
+  }, [cart, dispatch])
 
   return (
     <Fragment>
