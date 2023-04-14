@@ -16,52 +16,6 @@ function App() {
 
   const dispatch = useDispatch()
 
-  // useEffect(() => {
-
-   
-  //     const sendData = async () => {
-
-  //    dispatch(uiActions.showNotification({
-  //       status: "pending",
-  //       message: "Sending cart data",
-  //       title: "Sending"
-  //   }))
-
-  //       const response = await fetch(`https://advanceredux-8aa58-default-rtdb.firebaseio.`, {
-  //         method: "PUT",
-  //         body: JSON.stringify(cart)
-  //       })
-        
-  //       if (!response.ok) {
-  //         throw new Error("Something went wrong")
-  //       }
-  //       const responseData = response.json()
-  //       console.log(responseData)
-  //     }
-
-  //     if ( isInital ) {
-  //         isInital = false
-  //         return;
-  //       }
-
-       
-  //      dispatch(uiActions.showNotification({
-  //       status: "success",
-  //       message: "Successfuly sent cart data",
-  //       title: "Sent"
-  //     }))
-    
-
-  //   sendData().catch ((error) => { 
-  //     dispatch(uiActions.showNotification({
-  //       status: "error",
-  //       message: "Failed transaction",
-  //       title: "Error 404"
-  //     }))  
-  //   })
-    
-  // }, [cart, dispatch])
-
   useEffect(() => {
 
     const sendCartData = async () => {
@@ -86,7 +40,7 @@ function App() {
     }))
     }
 
-    if (  isInital ) {
+    if ( isInital ) {
       isInital = false
       return;
     }
@@ -99,6 +53,7 @@ function App() {
       }))
     })
   }, [cart, dispatch])
+
 
 
   return (
