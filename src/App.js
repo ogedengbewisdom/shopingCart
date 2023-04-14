@@ -16,44 +16,80 @@ function App() {
 
   const dispatch = useDispatch()
 
+  // useEffect(() => {
+  //   const sendCartData = async () => {
+  //     dispatch(uiActions.showNotification({
+  //       status: "pending",
+  //       message: "Sending Cart Data",
+  //       title: "Sending"
+  //     }))
+  //   const response = await fetch(`https://advanceredux-8aa58-default-rtdb.firebaseio.com/cart.json`, {
+  //     method: "PUT",
+  //     body: JSON.stringify(cart)
+  //   })
+  //   if ( !response.ok ) {
+  //     throw new Error ("Something went wrong")
+  //   }
+  //   dispatch(uiActions.showNotification({
+  //     status: "success",
+  //     message: "Successfully send Cart data",
+  //     title: "Success"
+  //   }))
+  //   }
+  //   if ( isInital ) {
+  //     isInital = false
+  //     return;
+  //   }
+  //   sendCartData().catch(error => {
+  //     dispatch(uiActions.showNotification({
+  //       status: "error",
+  //       message: "Failed to send cart",
+  //       title: "Error 404"
+  //     }))
+  //   })
+  // }, [cart, dispatch])
+
   useEffect(() => {
-
-    const sendCartData = async () => {
-
+    const sendCartDatass = async () => {
+      if (isInital) {
+        isInital = false
+        return;
+      }
+  
       dispatch(uiActions.showNotification({
         status: "pending",
-        message: "Sending Cart Data",
-        title: "Sending"
+        title: "Sending",
+        message: "Sending cart data"
       }))
-    const response = await fetch(`https://advanceredux-8aa58-default-rtdb.firebaseio.com/cart.json`, {
-      method: "PUT",
-      body: JSON.stringify(cart)
-    })
-    if ( !response.ok ) {
-      throw new Error ("Something went wrong")
-    }
+      const sendCartData = async () => {
+        const response = await fetch(`https://advanceredux-8aa58-default-rtdb.firebaseio.com/cart.json`, {
+          method: "PUT",
+          body: JSON.stringify(cart)
+        })
+        if ( !response.ok ) {
+          throw new Error ("Error 404")
+        }
+      }
+      try {
+        await sendCartData();
+        dispatch(uiActions.showNotification({
+          status: "success",
+          title: "Success",
+          message: "Sent cart data"
+        }))
 
-    dispatch(uiActions.showNotification({
-      status: "success",
-      message: "Successfully send Cart data",
-      title: "Success"
-    }))
+      } 
+      catch (error) {
+        dispatch(uiActions.showNotification({
+          status: "error",
+          title: "Error 404",
+          message: error.message
+        }))
+      }
     }
-
-    if ( isInital ) {
-      isInital = false
-      return;
-    }
-
-    sendCartData().catch(error => {
-      dispatch(uiActions.showNotification({
-        status: "error",
-        message: "Failed to send cart",
-        title: "Error 404"
-      }))
-    })
+    sendCartDatass()
+    
   }, [cart, dispatch])
-
 
 
   return (
