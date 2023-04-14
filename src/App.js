@@ -5,7 +5,7 @@ import Products from './components/Shop/Products';
 import {useDispatch, useSelector} from "react-redux"
 import { Fragment } from 'react';
 import Notification from './components/UI/Notification';
-import { sendCartData } from "./store/cartSlice"
+import { sendCartData, fetchCartData } from "./store/cartActions"
 
 let isInital = true
 
@@ -90,6 +90,10 @@ function App() {
   //   sendCartDatass()
     
   // }, [cart, dispatch])
+
+  useEffect( () => {
+    dispatch(fetchCartData())
+  }, [dispatch])
 
   useEffect( () => {
     if ( isInital ) {
