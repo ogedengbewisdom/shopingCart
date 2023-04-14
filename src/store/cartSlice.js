@@ -49,12 +49,13 @@ const cartSlice = createSlice({
     }
 })
 
-export const sendCartData = (cart) => {
+
+export const sendCartData = ( cart ) => {
     return async (dispatch) => {
         dispatch(uiActions.showNotification({
+            title: "Sending...",
             status: "pending",
-            message: "Sending Cart data",
-            title: "Sending..."
+            message: "sending cart data!"
         }))
 
         const sendRequest = async () => {
@@ -62,17 +63,27 @@ export const sendCartData = (cart) => {
                 method: "PUT",
                 body: JSON.stringify(cart)
             })
-            if (!response.ok) {
-                throw new Error("Something went wrong")
+
+            if ( !response.ok ) {
+                throw new Error("Error 404")
             }
         }
 
         try {
             await sendRequest()
-        }
+            dispatch(uiActions.showNotification({
+                title: "Success",
+                status: "success",
+                message: "sent cart data!"
+            }))
+        } 
 
         catch(error) {
-            
+            dispatch(uiActions.showNotification({
+                title: "Error 404",
+                message: error.message,
+                status: "error"
+            }))
         }
     }
 }
