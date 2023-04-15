@@ -6,7 +6,7 @@ const CartButton = (props) => {
 
   const dispatch = useDispatch()
 
-  const cartItem = useSelector( state => state.cart.totalQuantity )
+  const cartQuantity = useSelector( state => state.cart.totalQuantity )
   
   // const cartQuantity = cartItem.reduce((accumulator, currentValue) => {
   //   return accumulator + currentValue.quantity
@@ -18,7 +18,7 @@ const CartButton = (props) => {
   return (
     <button onClick={buttonToggleHandler} type='button' className={classes.button}>
       <span>My Cart</span>
-      <span className={classes.badge}>{cartItem}</span>
+      <span className={classes.badge}>{cartQuantity}</span>
     </button>
   );
 };
